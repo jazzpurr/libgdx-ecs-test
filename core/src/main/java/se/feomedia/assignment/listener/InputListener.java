@@ -22,6 +22,8 @@ public class InputListener extends InputAdapter {
         if (camera.zoom < .1f)
             camera.zoom = .1f;
 
+        camera.update();
+
         return super.scrolled(amount);
     }
 

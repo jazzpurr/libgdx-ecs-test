@@ -4,6 +4,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import se.feomedia.assignment.Utils;
 import se.feomedia.assignment.component.Movement;
 import se.feomedia.assignment.component.Position;
 
@@ -24,6 +25,8 @@ public class MovementSystem extends IteratingSystem {
         Vector2 position = positionMapper.get(entityId).position;
         Vector2 direction = movementMapper.get(entityId).direction;
         float speed = movementMapper.get(entityId).speed;
+
+        positionMapper.get(entityId).lastPosition = position.cpy();
 
         position.x += speed * direction.x * Gdx.graphics.getDeltaTime();
         position.y += speed * direction.y * Gdx.graphics.getDeltaTime();

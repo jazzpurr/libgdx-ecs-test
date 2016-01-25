@@ -7,7 +7,6 @@ import com.artemis.WorldConfiguration;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,13 +33,14 @@ public class GameApplication extends Game {
                 .register(cam = new OrthographicCamera(1920, 1080))
                 .register(new ShapeRenderer())
                 .register(new SpriteBatch())
-                .setSystem(new RenderableResolver())
+                .setSystem(new SnakeSystem())
+                .setSystem(new SoundEffectResolver())
+                .setSystem(new RenderResolver())
                 .setSystem(new RenderSystem())
                 .setSystem(new ShapeOutlineSystem())
                 .setSystem(new MovementSystem())
                 .setSystem(new EdgeBounceSystem())
                 .setSystem(new CameraPanSystem());
-
         world = new World(config);
         world.inject(this);
         world.process();
@@ -55,26 +55,24 @@ public class GameApplication extends Game {
 
         // Ball
         int ball = world.create();
-
         EntityEdit ballEdit = world.edit(ball);
+        ballEdit.create(SnakePosition.class);
         ballEdit.create(Position.class);
         ballEdit.create(Size.class).size.set(100, 100);
         ballEdit.create(Shape.class);
         ballEdit.create(Movement.class);
-        ballEdit.create(RenderableRef.class).filePath = "player.png";
-
-//        shapeMapper.get(ball).filled = true;
+//        ballEdit.create(RenderRef.class).filePath = "player.png";
+        ballEdit.create(SoundEffectRef.class).filePath = "laser6.mp3";
+        shapeMapper.get(ball).filled = true;
         shapeMapper.get(ball).shapeColor = Color.GREEN;
         shapeMapper.get(ball).shapeGeometry = Shape.ShapeGeometry.RECTANGLE;
 
         // Paddle
         int paddle = world.create();
-
         EntityEdit paddleEdit = world.edit(paddle);
         paddleEdit.create(Position.class);
         paddleEdit.create(Size.class).size.set(100, 100);
         paddleEdit.create(Shape.class);
-
         shapeMapper.get(paddle).filled = true;
         shapeMapper.get(paddle).shapeColor = Color.BLUE;
     }
