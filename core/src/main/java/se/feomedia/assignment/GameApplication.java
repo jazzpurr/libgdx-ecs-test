@@ -53,11 +53,11 @@ public class GameApplication extends Game {
         EntityEdit sceneEdit = world.edit(scene);
         sceneEdit.create(Scene.class);
 
-        // Ball
-        int ball = world.create();
-        EntityEdit ballEdit = world.edit(ball);
-        ballEdit.create(SnakePosition.class);
-        ballEdit.create(Position.class);
+            // Ball
+            int ball = world.create();
+            EntityEdit ballEdit = world.edit(ball);
+            ballEdit.create(SnakePosition.class);
+            ballEdit.create(Position.class);
         ballEdit.create(Size.class).size.set(100, 100);
         ballEdit.create(Shape.class);
         ballEdit.create(Movement.class);
